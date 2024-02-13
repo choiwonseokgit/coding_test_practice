@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(a, b, c) {
+        const arr = [a, b, c];
+        arr.sort((a, b) => a - b);
+        const longest = arr[arr.length - 1];
+        const answer = longest < arr[0] + arr[1] ? true : false;
+        return answer;
+      }
+
+      console.log(solution(13, 33, 17));
+      console.log(solution(6, 7, 11));
+    </script>
+  </body>
+</html>
