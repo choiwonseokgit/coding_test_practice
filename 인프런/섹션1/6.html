@@ -6,7 +6,19 @@
   <body>
     <script>
       function solution(arr) {
-        return answer;
+        let sum = 0;
+        let smallest = 99999;
+        arr.forEach((el) => {
+          if (el % 2 === 1) {
+            sum += el;
+            if (el <= smallest) {
+              smallest = el;
+            }
+          }
+        });
+        console.log(sum);
+        console.log(smallest);
+        // return answer;
       }
 
       arr = [12, 77, 38, 41, 53, 92, 85];
