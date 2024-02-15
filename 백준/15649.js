@@ -2,6 +2,8 @@ function question(n, m) {
   const arr = new Array(n).fill().map((_, i) => i + 1);
   const answerArr = [];
 
+  //재귀호출은 계속 함수를 호출하는 것 종료조건으로 조절
+
   function permutation(curArr, leftArr) {
     console.log("curArr: ", curArr, "leftArr: ", leftArr);
     //종료 조건
