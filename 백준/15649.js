@@ -1,3 +1,36 @@
+/*
+const fs = require("fs");
+const input = fs.readFileSync("/dev/stdin").toString().trim().split(' ').map((i) => parseInt(i))
+const [n, m] = input
+
+const Arr = new Array(n).fill().map((_, i) => i+1);
+
+const answerArr = [];
+
+function permutation(currentArr, leftArr) {
+    if(currentArr.length === m) {
+        answerArr.push(currentArr);
+        return;
+    }
+    
+    leftArr.map((num, i) => {
+        permutation([...currentArr, num], [...leftArr.slice(0, i), ...leftArr.slice(i+1)])
+    })
+}
+
+Arr.map((num, i) => {
+    permutation([num], [...Arr.slice(0, i), ...Arr.slice(i+1)])
+})
+
+let resultString = '';
+answerArr.forEach((answer, i) => {
+    const string = answer.join(' ')
+    resultString += string
+    resultString += '\n'
+})
+console.log(resultString)
+*/
+
 function question(n, m) {
   const arr = new Array(n).fill().map((_, i) => i + 1);
   const answerArr = [];
