@@ -1,51 +1,40 @@
-function solution(len, arr) {
-  let cnt = 0;
-
-  const isBong = (arr, i, j) => {
-    const item = arr[i][j];
-
-    if (i === 0 && j === 0) {
-      if (item > arr[i][j + 1] && item > arr[i + 1][j]) return true;
-    }
-
-    if (i === 0 && j !== 0) {
-      if (item > arr[i][j + 1] && item > arr[i + 1][j] && item > arr[i][j - 1])
-        return true;
-    }
-
-    if (j === 0 && i !== 0) {
-      if (item > arr[i][j + 1] && item > arr[i + 1][j] && item > arr[i - 1][j])
-        return true;
-    }
-
-    if (
-      item > arr[i][j + 1] &&
-      item > arr[i + 1][j] &&
-      item > arr[i][j - 1] &&
-      item > arr[i - 1][j]
-    ) {
-      return true;
-    }
-
-    return false;
-  };
-
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr.length; j++) {
-      if (isBong(arr, i, j)) cnt += 1;
-    }
+function isBong(xIdx, yIdx, arr) {
+  const dx = [-1, 0, 1, 0];
+  const dy = [0, 1, 0, -1];
+  const myVal = arr[xIdx][yIdx];
+  for (let k = 0; k < 4; k++) {
+    const nx = xIdx + dx[k];
+    const ny = yIdx + dy[k];
+    if (nx < 0 || ny < 0 || nx >= arr.length || ny >= arr.length) continue;
+    const compareVal = arr[nx][ny];
+    if (myVal < compareVal) return false;
   }
-
-  console.log("cnt: ", cnt);
+  return true;
 }
 
-solution(5, [
-  [5, 3, 7, 2, 3],
-  [3, 7, 1, 6, 1],
-  [7, 2, 5, 3, 4],
-  [4, 3, 6, 4, 1],
-  [8, 7, 3, 5, 2],
-]);
+function solution(len, arr) {
+  // 4방향 탐색
+  // (i+dx[k],j+dy[k])
+  // dx=[-1, 0, 1, 0]
+  // dy=[0, 1, 0, -1]
+  let cnt = 0;
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length; j++) {
+      if (isBong(i, j, arr)) cnt += 1;
+    }
+  }
+  return cnt;
+}
+
+console.log(
+  solution(5, [
+    [5, 3, 7, 2, 3],
+    [3, 7, 1, 6, 1],
+    [7, 2, 5, 3, 4],
+    [4, 3, 6, 4, 1],
+    [8, 7, 3, 5, 2],
+  ])
+);
 
 // function solution(len, arr) {
 //   const newArr = new Array(len + 2)
