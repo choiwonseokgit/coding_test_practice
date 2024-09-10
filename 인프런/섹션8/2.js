@@ -1,39 +1,18 @@
 function solution(num) {
-  let answer = "";
+  let answerArr = [];
+  // 11 -> 1011
+  function getBinaryNum(num) {
+    if (!num) return;
 
-  function DFS(num) {
-    if (num === 0) {
-      return;
-    }
-    const quotient = Math.floor(num / 2);
-    const binaryNum = num % 2;
+    answerArr.unshift(num % 2);
+    const nextNum = parseInt(num / 2);
 
-    DFS(quotient);
-    answer += binaryNum;
+    getBinaryNum(nextNum);
   }
-  DFS(num);
-  return answer;
+
+  getBinaryNum(11);
+
+  return answerArr.join("");
 }
-
-// function solution(num) {
-//   let answer = "";
-
-//   function getBinaryNum(num, binaryArr) {
-//     const quotient = Math.floor(num / 2);
-//     const binaryNum = num % 2;
-
-//     if (quotient === 0) {
-//       const finalbinaryArr = [binaryNum, ...binaryArr];
-//       answer += finalbinaryArr.join("");
-//       return;
-//     }
-
-//     return getBinaryNum(quotient, [binaryNum, ...binaryArr]);
-//   }
-
-//   getBinaryNum(num, []);
-
-//   return answer;
-// }
 
 console.log(solution(11));
