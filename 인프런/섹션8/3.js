@@ -1,18 +1,15 @@
-function solution(n) {
-  let answer = "";
+function solution() {
+  function DFS(node) {
+    if (node > 7) return;
 
-  function DFS(n) {
-    if (n > 7) return;
-    else {
-      answer += n + " ";
-      DFS(2 * n);
-      DFS(2 * n + 1);
-    }
+    // console.log("전위 순회", node);
+    DFS(2 * node);
+    console.log("중위 순회", node);
+    DFS(2 * node + 1);
+    // console.log("후위 순회", node);
   }
 
-  DFS(n);
-
-  return answer;
+  DFS(1);
 }
 
-console.log(solution(1));
+console.log(solution());
