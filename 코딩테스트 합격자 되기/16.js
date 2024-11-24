@@ -1,0 +1,57 @@
+//나의 첫번째 코드
+function solution(progresses, speeds) {
+  let checkIdx = 0;
+  let finishCnt = 0;
+  const answer = [];
+
+  while (finishCnt < progresses.length) {
+    for (let i = checkIdx; i < progresses.length; i++) {
+      progresses[i] += speeds[i];
+    }
+
+    if (progresses[checkIdx] >= 100) {
+      let cnt = 0;
+      for (let i = checkIdx; i < progresses.length; i++) {
+        if (progresses[i] >= 100) cnt++;
+        else {
+          checkIdx = i;
+          break;
+        }
+      }
+      answer.push(cnt);
+      finishCnt += cnt;
+    }
+
+    if (checkIdx >= progresses.length) break;
+  }
+
+  return answer;
+}
+
+//제공된 코드
+function solution(progresses, speeds) {
+  const answer = [];
+  const n = progresses.length;
+  //1. 각 작업의 배포 가능일 계산
+  const daysLeft = progresses.map((progress, idx) =>
+    Math.ceil((100 - progress) / speeds[idx])
+  );
+
+  let cnt = 0; //2. 배포될 작업의 수 카운트
+  let maxDay = daysLeft[0]; //3. 현재 배포될 작업 중 가장 늦게 배포될 작업의 가능일
+
+  for (let i = 0; i < n; i++) {
+    if (daysLeft[i] <= maxDay) {
+      //4. 배포 가능일이 가장 늦은 배포일보다 빠르면
+      cnt++;
+    } else {
+      //5. 배포 예정일이 기준 배포일보다 느리면
+      answer.push(cnt);
+      cnt = 1;
+      maxDay = daysLeft[i];
+    }
+  }
+
+  answer.push(cnt); //6. 마지막으로 카운트된 작업들을 함께 배포
+  return answer;
+}
