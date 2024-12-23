@@ -55,3 +55,25 @@ function solution(progresses, speeds) {
   answer.push(cnt); //6. 마지막으로 카운트된 작업들을 함께 배포
   return answer;
 }
+
+function solution2(progresses, speeds) {
+  // 작업 순서에 따라 배포, 뒷 순서가 먼저 완료되어도 앞 순서 작업이 완료될때 같입 배포
+  // return [2 ,1] -> 배포 일짜별 작업 횟수 return
+
+  const answer = [];
+  let prevNeedDay = null;
+
+  progresses.forEach((progress, i) => {
+    const left = 100 - progress;
+    const needDay = Math.ceil(left / speeds[i]);
+
+    if (prevNeedDay && prevNeedDay >= needDay) {
+      answer[answer.length - 1] += 1;
+    } else {
+      answer.push(1);
+      prevNeedDay = needDay;
+    }
+  });
+
+  return answer;
+}

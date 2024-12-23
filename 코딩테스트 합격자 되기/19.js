@@ -35,3 +35,55 @@ function solution(stringList, queryList) {
 console.log(
   solution(["apple", "banana", "cherry"], ["banana", "kiwi", "melon", "apple"])
 );
+
+function solution2(stringList, queryList) {
+  const answer = Array.from({ length: queryList.length }, () => false);
+
+  queryList.forEach((q, i) => {
+    if (stringList.includes(q)) {
+      answer[i] = true;
+    }
+  });
+
+  return answer;
+}
+
+console.log(
+  solution2(["apple", "banana", "cherry"], ["banana", "kiwi", "melon", "apple"])
+);
+
+function polynomialHash(str) {
+  let num = 31; // 소수
+  let m = str.length;
+
+  let hash = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * num + str[i].charCodeAt()) * m;
+  }
+
+  return hash;
+}
+
+function solution2_2(stringList, queryList) {
+  const hashList = stringList.map((s) => polynomialHash(s));
+
+  const answer = [];
+
+  queryList.forEach((q) => {
+    if (hashList.includes(polynomialHash(q))) {
+      answer.push(true);
+    } else {
+      answer.push(false);
+    }
+  });
+
+  return answer;
+}
+
+console.log(
+  solution2_2(
+    ["apple", "banana", "cherry"],
+    ["banana", "kiwi", "melon", "apple"]
+  )
+);

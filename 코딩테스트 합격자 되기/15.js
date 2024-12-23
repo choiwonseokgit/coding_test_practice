@@ -86,3 +86,16 @@ function solution_gpt(n, k) {
 }
 
 console.log(solution_gpt(5, 2)); // 출력: 3
+
+function solution2(n, k) {
+  const queue = Array.from({ length: n }, (_, i) => i + 1);
+
+  while (queue.length > 1) {
+    for (let i = 0; i < k - 1; i++) {
+      queue.push(queue.shift());
+    }
+    queue.shift();
+  }
+
+  return queue;
+}
