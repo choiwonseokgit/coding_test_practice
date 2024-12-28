@@ -68,8 +68,42 @@ function solution(want, number, discount) {
       }
     }
 
-    if(isShallowEqual(discount10d, wantObj)) answer += 1;
+    if (isShallowEqual(discount10d, wantObj)) answer += 1;
   }
 
-  return answer
+  return answer;
+}
+
+function solution2(want, number, discount) {
+  // 회원가입 가능한 날짜 cnt return
+  const map = new Map();
+  let cnt = 0;
+
+  want.forEach((w, i) => map.set(w, number[i]));
+
+  let i = 0;
+  let j = i + 10;
+
+  while (true) {
+    if (j > discount.length) break;
+    const wantMap = new Map(map);
+
+    for (let k = i; k < j; k++) {
+      if (!wantMap.get(discount[k])) break; // 특정 물품의 개수가 초과한다면 다른 물품의 갯수가 부족하다는 뜻이므로 break
+      else {
+        wantMap.set(discount[k], wantMap.get(discount[k]) - 1);
+
+        if (wantMap.get(discount[k]) === 0) {
+          wantMap.delete(discount[k]);
+        }
+      }
+    }
+
+    if (wantMap.size === 0) cnt++;
+
+    i += 1;
+    j = i + 10;
+  }
+
+  return cnt;
 }
