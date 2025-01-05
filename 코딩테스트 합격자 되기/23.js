@@ -68,3 +68,43 @@ function solution_book(genres, plays) {
 
   return answer;
 }
+
+//2번째 풀이
+function solution(genres, plays) {
+  // 1. 합을 먼저 비교 후 장르 선정
+  const totalPlays = {};
+
+  genres.forEach((genre, i) => {
+    if (!(genre in totalPlays)) {
+      totalPlays[genre] = 0;
+    }
+    totalPlays[genre] += plays[i];
+  });
+
+  const totalPlaysSortArr = Object.entries(totalPlays).sort(
+    (a, b) => b[1] - a[1]
+  );
+
+  // 2. 그 후 개별 곡 선정
+  const answer = [];
+  const sortGenres = totalPlaysSortArr.map((el) => el[0]);
+
+  const genreAndPlayWithIdx = genres.map((genre, i) => ({
+    genre,
+    idx: i,
+    play: plays[i],
+  }));
+
+  sortGenres.forEach((sg) => {
+    const filterdSg = genreAndPlayWithIdx.filter((el) => el.genre === sg);
+    filterdSg.sort((a, b) => b.play - a.play);
+
+    if (filterdSg.length === 1) {
+      return answer.push(filterdSg[0].idx);
+    }
+
+    answer.push(...filterdSg.slice(0, 2).map((el) => el.idx));
+  });
+
+  return answer;
+}
