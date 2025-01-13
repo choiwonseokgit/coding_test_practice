@@ -72,3 +72,31 @@ function solution_book(id_list, report, k) {
 
   return answer;
 }
+
+function solution2(id_list, report, k) {
+  const complainCnt = {}; // 신고 횟수 cnt Obj, Set 객체로 중복방지. 신고한 user이름 add
+  const answerMap = new Map(); // answer로 활용할 Map객체
+  
+  id_list.forEach((id) => {
+      complainCnt[id] = new Set();
+      answerMap.set(id, 0);
+  })
+  
+  report.forEach((r) => {
+      const [userId, complainTargetUserId] = r.split(' ');
+      
+      complainCnt[complainTargetUserId].add(userId);
+  })
+  
+  for(const id of Object.keys(complainCnt)) {
+      const cnt = complainCnt[id].size;
+      
+      if(cnt >= k) { // 신고 k번 이상 신고된 id
+          const complainFromIds = Array.from(complainCnt[id]);
+
+          complainFromIds.forEach((c) => answerMap.set(c, answerMap.get(c) + 1));
+      }
+  }
+  
+  return Array.from(answerMap.values())  
+}   

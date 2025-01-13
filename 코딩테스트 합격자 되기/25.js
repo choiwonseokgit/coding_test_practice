@@ -95,3 +95,48 @@ function solution(orders, courese) {
 
   return answer.sort();
 }
+
+function solution2(orders, course) {
+  /*
+  메뉴 구성 후보들을 배열로 return, 그 메뉴 배열은 정렬 되어있어야함
+  1. 최소 2번 주문 이상
+  2. 만약 4개 코스인데 주문들이 최대 주문수가 같다면 그 주문수에 해당하는 메뉴들 다 return
+  
+  각 course에 따른 메뉴들을 구해서 카운트
+  그 중 최댓값을 정답 배열에 삽입
+  */
+  
+  const answer = [];
+  
+  function getSubOrders(order, n) {
+      if(n === 1) return order.map((o) => [o]);
+      const result = [];
+      
+      order.forEach((o, i) => {
+          const rest = order.slice(i + 1);
+          const subOrders = getSubOrders(rest, n-1);
+          const combines = subOrders.map((s) => [o, ...s]);
+          result.push(...combines);
+      })
+      
+      return result;
+  }
+  
+  course.forEach((c) => { // course 크기 1이상 10이하
+      const cntMap = new Map();
+      
+      orders.forEach((order) => { // order 크기 2이상 20이하
+          const sortOrder = order.split('').sort() // order 2이상 10 이하인 문자열
+          const subOrders = getSubOrders(sortOrder, c);
+          
+          subOrders.forEach((subOrder) => cntMap.set(subOrder.join(''), (cntMap.get(subOrder.join('')) || 0) + 1))
+      })
+      
+      const maxCnt = Math.max(...Array.from(cntMap.values()))
+      const answer_c = Array.from(cntMap).filter(([order, cnt]) => cnt >= 2 && cnt === maxCnt).map((el) => el[0]);
+      
+      answer.push(...answer_c)
+  })
+  
+  return answer.sort();
+}
